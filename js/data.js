@@ -3,7 +3,8 @@ const POSITIONS=["NDT Level II (UT/MT/PT)","NDT Level III","PAUT Inspector","TOF
 const COUNTRIES=["Kuwait","Qatar","UAE","Saudi Arabia","Oman","Bahrain"],SECTORS=["Oil & Gas","Petrochemical","Power","Construction","Marine"];
 const certs=["ASNT Level II UT","ASNT Level II MT","ASNT Level II PT","PAUT Level II","CSWIP 3.1","API 510"];
 const sts=["New","Reviewed","Shortlisted","Interview","Selected","Rejected"];
-const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+// Dates use India time (IST), the same clock the database uses for last dates, subscriptions and deletion.
+const today=()=>new Date(Date.now()+19800000).toISOString().slice(0,10);
 
 const sb=supabase.createClient(CONFIG.SUPABASE_URL,CONFIG.SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 if(/YOUR-/.test(CONFIG.SUPABASE_URL+CONFIG.SUPABASE_ANON_KEY)){
@@ -14,8 +15,8 @@ if(/YOUR-/.test(CONFIG.SUPABASE_URL+CONFIG.SUPABASE_ANON_KEY)){
 let jobs=[],cands=[],accounts=[],profile=null,adminStats={},usage={};
 
 const mapJob=r=>({id:r.id,heading:r.heading,country:r.country,sector:r.sector,positions:r.positions||[],status:r.status,posted:r.posted,urgent:!!r.urgent,deadline:r.deadline||"",desc:r.description||""});
-const mapCand=r=>({id:r.id,name:r.name,email:r.email,phone:r.phone,job:r.job_id,position:r.position,exp:Number(r.exp),loc:r.loc||"-",pref:r.pref||"-",certs:r.certs||[],status:r.status,date:String(r.created_at).slice(0,10),size:r.resume_size!=null?Number(r.resume_size).toFixed(1):"0.0",key:r.resume_key||"",hasResume:!!r.resume_key});
-const mapAcc=r=>({id:r.id,name:r.name,email:r.email,logo:r.logo_key?sb.storage.from("logos").getPublicUrl(r.logo_key).data.publicUrl:"",status:r.status,code:r.code||"",plan:r.plan,expires:r.expires||"",requested:r.requested});
+const mapCand=r=>({id:r.id,name:r.name,email:r.email,phone:r.phone,job:r.job_id,position:r.position,exp:Number(r.exp),loc:r.loc||"-",pref:r.pref||"-",certs:r.certs||[],status:r.status,date:String(r.created_at).slice(0,10),size:r.resume_size!=null?Number(r.resume_size).toFixed(1):"0.0",key:r.resume_key||"",hasResume:!!r.resume_key,expiresAt:r.expires_at,expiresMs:Date.parse(r.expires_at),extendedAt:r.extended_at||null});
+const mapAcc=r=>({id:r.id,name:r.name,email:r.email,logo:r.logo_key?sb.storage.from("logos").getPublicUrl(r.logo_key).data.publicUrl:"",status:r.status,code:r.code||"",phone:r.phone||"",plan:r.plan,expires:r.expires||"",requested:r.requested});
 
 // Supabase returns max 1000 rows per request, so read in pages
 async function fetchAll(q){const out=[];for(let i=0;;i+=1000){const {data,error}=await q().range(i,i+999);if(error)throw error;out.push(...data);if(data.length<1000)break}return out}
@@ -58,7 +59,7 @@ async function deleteResumes(paths){
 async function loadAgencyData(){
  const [j,c]=await Promise.all([
   fetchAll(()=>sb.from("jobs").select("*").order("created_at",{ascending:false}).order("id")),
-  fetchAll(()=>sb.from("candidates").select("id,job_id,name,email,phone,position,exp,loc,pref,certs,status,resume_key,resume_size,resume_uploaded,created_at").order("created_at",{ascending:false}).order("id"))]);
+  fetchAll(()=>sb.from("candidates").select("id,job_id,name,email,phone,position,exp,loc,pref,certs,status,resume_key,resume_size,resume_uploaded,expires_at,extended_at,created_at").order("created_at",{ascending:false}).order("id"))]);
  jobs=j.map(mapJob);cands=c.map(mapCand)}
 
 async function loadAdminData(){
