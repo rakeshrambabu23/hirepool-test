@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HirePool | Reset password</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/home.css"></head><body>
+<nav><div class="wrap"><a href="index.html" class="logo">Hire<i>Pool</i></a><a href="index.html#login" class="btn o">Agency login</a></div></nav>
+<header class="hero" style="min-height:100vh"><div class="wrap" style="grid-template-columns:1fr"><form class="frame" id="rf" novalidate style="max-width:460px;margin:0 auto;display:none"><div class="mono"><span>Frame 01</span><span>Reset</span></div><h3>Set a new password</h3>
+<label for="pw">New password (8+ characters)</label><input id="pw" type="password" autocomplete="new-password"><label for="pc">Confirm password</label><input id="pc" type="password" autocomplete="new-password">
+<div class="err" id="er" role="alert"></div><button class="btn">Save password</button></form>
+<div class="frame" id="bad" style="max-width:460px;margin:0 auto"><h3>Checking your link...</h3><p style="color:var(--mut)" id="bm">One moment.</p><a href="index.html" class="btn" style="margin-top:12px;width:100%;justify-content:center">Back to login</a></div></div></header>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/config.js"></script><script src="js/data.js"></script><script>
+const $=s=>document.querySelector(s);let ready=false;
+const show=()=>{ready=true;$("#bad").style.display="none";$("#rf").style.display="block"};
+sb.auth.onAuthStateChange((ev)=>{if(ev==="PASSWORD_RECOVERY")show()});
+setTimeout(()=>{if(!ready){$("#bad").querySelector("h3").textContent="Link invalid or expired";$("#bm").textContent="Go back to the login page and click Forgot password to get a new link."}},3500);
+$("#rf").onsubmit=async e=>{e.preventDefault();const er=m=>{$("#er").textContent=m},pw=$("#pw").value;
+ if(pw.length<8)return er("Password must be at least 8 characters.");if(pw!==$("#pc").value)return er("Passwords do not match.");
+ const {error}=await sb.auth.updateUser({password:pw});if(error)return er(error.message);
+ await sb.auth.signOut();$("#rf").style.display="none";$("#bad").style.display="block";$("#bad").querySelector("h3").textContent="Password updated";$("#bm").textContent="You can now log in with your new password."};
+</script></body></html>

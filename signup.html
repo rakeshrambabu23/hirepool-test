@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HirePool | Agency sign up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/home.css"></head><body>
+<nav><div class="wrap"><a href="index.html" class="logo">Hire<i>Pool</i></a><a href="index.html#login" class="btn o">Agency login</a></div></nav>
+<header class="hero" style="min-height:100vh"><div class="wrap" style="grid-template-columns:1fr 1fr"><div><div class="scene mono"><i class="rec"></i><span>Agency sign up</span></div><h1 style="font-size:clamp(34px,5vw,64px)">Start with <span>HirePool.</span></h1>
+<p class="lead">Tell us about your agency (you can add your logo after approval). We review your request, confirm your subscription and send you a unique access code to log in.</p><div class="meta mono"><span>1 month ₹4,999</span><span>3 months ₹11,999</span><span>6 months: contact sales</span></div></div>
+<form class="frame" id="sf" novalidate><div class="mono"><span>Frame 01</span><span>Registration</span></div><h3>Create agency account</h3>
+<label for="an">Agency name</label><input id="an" autocomplete="organization"><label for="em">Email</label><input id="em" type="email" autocomplete="email"><label for="pw">Password (8+ characters)</label><input id="pw" type="password" autocomplete="new-password"><label for="pc">Confirm password</label><input id="pc" type="password" autocomplete="new-password">
+<label for="pn">Plan</label><select id="pn"><option value="1 month">1 month - ₹4,999</option><option value="3 months">3 months - ₹11,999</option><option value="6 months">6 months - contact sales</option></select>
+<div class="err" id="er" role="alert"></div><button class="btn">Submit request</button><div class="demo">Your request is reviewed by our team. Access is enabled only after your subscription is confirmed.</div></form>
+<div class="frame" id="dn" style="display:none"><h3>Request received</h3><div class="ok">Thank you. Please confirm your email using the link we just sent. Our team will then review your details and confirm your subscription. Once approved, you will receive your unique access code by email. Then log in with your email, password and access code.</div><a href="index.html" class="btn" style="margin-top:18px;width:100%;justify-content:center">Back to home</a></div></div></header>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/config.js"></script><script src="js/data.js"></script><script>
+const $=s=>document.querySelector(s);const pl=new URLSearchParams(location.search).get("plan");if(pl)$("#pn").value=pl+(pl=="1"?" month":" months");
+$("#sf").onsubmit=async e=>{e.preventDefault();const er=m=>{$("#er").textContent=m},n=$("#an").value.trim(),em=$("#em").value.trim().toLowerCase(),pw=$("#pw").value,btn=$("#sf button.btn");
+ if(n.length<2)return er("Enter your agency name.");if(!/^\S+@\S+\.\S+$/.test(em))return er("Enter a valid email address.");
+ if(pw.length<8)return er("Password must be at least 8 characters.");if(pw!==$("#pc").value)return er("Passwords do not match.");
+ btn.disabled=true;er("");
+ try{
+  const {data,error}=await sb.auth.signUp({email:em,password:pw,options:{data:{agency_name:n,plan:$("#pn").value},emailRedirectTo:new URL("index.html",location.href).href}});
+  if(error)throw error;
+  if(data.user&&data.user.identities&&data.user.identities.length===0)throw new Error("An account with this email already exists.");
+  $("#sf").style.display="none";$("#dn").style.display="block"
+ }catch(x){console.error(x);er(x.message||"Could not submit. Please try again.")}finally{btn.disabled=false}};
+</script></body></html>
