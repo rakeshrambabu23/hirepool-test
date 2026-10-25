@@ -5,3 +5,21 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; connect-src 'self' https://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+
+/dashboard*
+  X-Robots-Tag: noindex, nofollow
+
+/jobs*
+  X-Robots-Tag: noindex, nofollow
+
+/candidates*
+  X-Robots-Tag: noindex, nofollow
+
+/admin*
+  X-Robots-Tag: noindex, nofollow
+
+/apply*
+  X-Robots-Tag: noindex, nofollow
+
+/reset*
+  X-Robots-Tag: noindex, nofollow

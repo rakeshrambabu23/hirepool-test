@@ -39,11 +39,6 @@ th{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em
 .post .ph{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start;margin-bottom:10px}.post h2{margin:0 0 2px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.post small{color:var(--mut)}.pa{display:flex;gap:6px;flex-wrap:wrap}
 code{font:600 13px monospace;background:var(--bg);padding:2px 6px;border-radius:6px}
 @media(max-width:860px){.side{position:static;width:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 14px;transform:none!important;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:0 8px 0 0}.org{margin:0}.side nav{flex-direction:row;flex-wrap:wrap;width:100%}}
-
-/* alerts, expiry, public form logo */
-.al{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:9px 12px;margin-bottom:8px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
-.al.warn{border-color:#fde68a;background:#fffbeb}.al.bad{border-color:#f1c4c4;background:#fef2f2}.al .btn{flex:0 0 auto}
-.Expired{background:#fee2e2;color:var(--bad)}td.warnTxt{color:var(--bad);font-weight:700}
-#ag{display:flex;align-items:center;gap:12px}
-.alogo{width:56px;height:56px;border-radius:12px;object-fit:contain;background:#fff;border:1px solid var(--line);flex:0 0 auto}
-.alogo.ini{display:grid;place-items:center;background:var(--soft);color:var(--blue);font:800 24px Syne;border:0}
+.alert{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:12px 14px;border-radius:10px;margin-bottom:10px;font-size:13px}
+.alert.hot{background:#fef2f2;border-color:#fecaca;color:#991b1b}.alert small{color:inherit;opacity:.85}
+@media(max-width:860px){.alert .btn{width:100%;text-align:center}}

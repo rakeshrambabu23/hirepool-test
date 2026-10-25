@@ -1,23 +1,42 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HirePool | Agency sign up</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#2F3CFF">
+<title>Agency Sign Up | HirePool Recruitment Software</title>
+<meta name="description" content="Create your HirePool agency account. Collect PDF resumes through one job link and manage candidates in one place. 1 month ₹4,999, 3 months ₹11,999.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://YOUR-DOMAIN.com/signup">
+<meta property="og:type" content="website"><meta property="og:site_name" content="HirePool"><meta property="og:title" content="Agency Sign Up | HirePool"><meta property="og:description" content="Create your HirePool agency account and start collecting resumes with one shareable job link."><meta property="og:url" content="https://YOUR-DOMAIN.com/signup"><meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/home.css"></head><body>
-<nav><div class="wrap"><a href="index.html" class="logo">Hire<i>Pool</i></a><a href="index.html#login" class="btn o">Agency login</a></div></nav>
-<header class="hero" style="min-height:100vh"><div class="wrap" style="grid-template-columns:1fr 1fr"><div><div class="scene mono"><i class="rec"></i><span>Agency sign up</span></div><h1 style="font-size:clamp(34px,5vw,64px)">Start with <span>HirePool.</span></h1>
+<nav aria-label="Main"><div class="wrap"><a href="index.html" class="logo">Hire<i>Pool</i></a><a href="index.html#login" class="btn o">Agency login</a></div></nav>
+<main><header class="hero full"><div class="wrap two"><div><div class="scene mono"><i class="rec"></i><span>Agency sign up</span></div><h1 style="font-size:clamp(34px,5vw,64px)">Start with <span>HirePool.</span></h1>
 <p class="lead">Tell us about your agency (you can add your logo after approval). We review your request, confirm your subscription and send you a unique access code to log in.</p><div class="meta mono"><span>1 month ₹4,999</span><span>3 months ₹11,999</span><span>6 months: contact sales</span></div></div>
 <form class="frame" id="sf" novalidate><div class="mono"><span>Frame 01</span><span>Registration</span></div><h3>Create agency account</h3>
-<label for="an">Agency name</label><input id="an" autocomplete="organization"><label for="em">Email</label><input id="em" type="email" autocomplete="email"><label for="mb">Mobile number</label><div style="display:flex;gap:8px"><select id="cc" style="flex:0 0 46%" aria-label="Country"></select><input id="mb" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="Mobile number"></div><small id="mh" style="color:var(--mut)"></small><label for="pw">Password (8+ characters)</label><input id="pw" type="password" autocomplete="new-password"><label for="pc">Confirm password</label><input id="pc" type="password" autocomplete="new-password">
+<label for="an">Agency name</label><input id="an" autocomplete="organization">
+<label for="em">Email</label><input id="em" type="email" autocomplete="email" inputmode="email">
+<label for="mb">Mobile number</label><div class="phn"><select id="cc" aria-label="Country code" autocomplete="tel-country-code"><option value="IN">India (+91)</option><option value="KW">Kuwait (+965)</option><option value="QA">Qatar (+974)</option><option value="AE">UAE (+971)</option><option value="SA">Saudi Arabia (+966)</option><option value="OM">Oman (+968)</option><option value="BH">Bahrain (+973)</option><option value="XX">Other country</option></select><input id="mb" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="98765 43210"></div><div class="hint" id="mh">Our team may call or WhatsApp you on this number to confirm your subscription.</div>
+<label for="pw">Password (8+ characters)</label><input id="pw" type="password" autocomplete="new-password"><label for="pc">Confirm password</label><input id="pc" type="password" autocomplete="new-password">
 <label for="pn">Plan</label><select id="pn"><option value="1 month">1 month - ₹4,999</option><option value="3 months">3 months - ₹11,999</option><option value="6 months">6 months - contact sales</option></select>
 <div class="err" id="er" role="alert"></div><button class="btn">Submit request</button><div class="demo">Your request is reviewed by our team. Access is enabled only after your subscription is confirmed.</div></form>
-<div class="frame" id="dn" style="display:none"><h3>Request received</h3><div class="ok">Thank you. Please confirm your email using the link we just sent. Our team will then review your details and confirm your subscription. Once approved, you will receive your unique access code by email. Then log in with your email, password and access code.</div><a href="index.html" class="btn" style="margin-top:18px;width:100%;justify-content:center">Back to home</a></div></div></header>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/config.js"></script><script src="js/data.js"></script><script src="js/countries.js"></script><script>
-const $=s=>document.querySelector(s);$("#cc").innerHTML=PHONE_COUNTRIES.map(c=>`<option value="${c.c}">${c.n} (+${c.d})</option>`).join("")+'<option value="OTHER">Other country (type +code)</option>';$("#cc").value="IN";const mh=()=>{$("#mh").textContent=phoneHint($("#cc").value)};mh();$("#cc").onchange=mh;const pl=new URLSearchParams(location.search).get("plan");if(pl)$("#pn").value=pl+(pl=="1"?" month":" months");
+<div class="frame" id="dn" style="display:none"><h3>Request received</h3><div class="ok">Thank you. Please confirm your email using the link we just sent. Our team will then review your details and confirm your subscription. Once approved, you will receive your unique access code by email. Then log in with your email, password and access code.</div><a href="index.html" class="btn" style="margin-top:18px;width:100%;justify-content:center">Back to home</a></div></div></header></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/config.js"></script><script src="js/data.js"></script><script>
+const $=s=>document.querySelector(s);const pl=new URLSearchParams(location.search).get("plan");if(pl)$("#pn").value=pl+(pl=="1"?" month":" months");
+// Mobile number rules per country: [dial code, regex for the number WITHOUT the country code and WITHOUT a leading 0, example]
+const PH={IN:["91",/^[6-9]\d{9}$/,"10 digits, starts with 6-9"],KW:["965",/^[569]\d{7}$/,"8 digits, starts with 5, 6 or 9"],QA:["974",/^[3567]\d{7}$/,"8 digits, starts with 3, 5, 6 or 7"],AE:["971",/^5\d{8}$/,"9 digits, starts with 5"],SA:["966",/^5\d{8}$/,"9 digits, starts with 5"],OM:["968",/^[79]\d{7}$/,"8 digits, starts with 7 or 9"],BH:["973",/^[36]\d{7}$/,"8 digits, starts with 3 or 6"]};
+const phone=()=>{const c=$("#cc").value,raw=$("#mb").value.replace(/[\s().-]/g,"");
+ if(c=="XX")return /^\+[1-9]\d{7,14}$/.test(raw)?raw:null;
+ const n=raw.replace(/^0+/,"").replace(new RegExp("^\\+?"+PH[c][0]),"");
+ return PH[c][1].test(n)?"+"+PH[c][0]+n:null};
+const hint=()=>{const c=$("#cc").value;$("#mb").placeholder=c=="XX"?"+countrycode number":c=="IN"?"98765 43210":"Mobile number";$("#mh").textContent=c=="XX"?"Type the full number with country code, e.g. +94771234567.":"Enter "+PH[c][2]+". We may call or WhatsApp you to confirm your subscription."};
+$("#cc").onchange=hint;hint();
 $("#sf").onsubmit=async e=>{e.preventDefault();const er=m=>{$("#er").textContent=m},n=$("#an").value.trim(),em=$("#em").value.trim().toLowerCase(),pw=$("#pw").value,btn=$("#sf button.btn");
- if(n.length<2)return er("Enter your agency name.");if(!/^\S+@\S+\.\S+$/.test(em))return er("Enter a valid email address.");const ph=validatePhone($("#cc").value,$("#mb").value);if(!ph.ok)return er(ph.msg);
+ if(n.length<2)return er("Enter your agency name.");if(!/^\S+@\S+\.\S+$/.test(em))return er("Enter a valid email address.");
+ const ph=phone();if(!ph)return er($("#cc").value=="XX"?"Enter a valid mobile number with country code, e.g. +94771234567.":"Enter a valid mobile number for the selected country ("+PH[$("#cc").value][2]+").");
  if(pw.length<8)return er("Password must be at least 8 characters.");if(pw!==$("#pc").value)return er("Passwords do not match.");
  btn.disabled=true;er("");
  try{
-  const {data,error}=await sb.auth.signUp({email:em,password:pw,options:{data:{agency_name:n,plan:$("#pn").value,phone:ph.e164},emailRedirectTo:new URL("index.html",location.href).href}});
+  const {data,error}=await sb.auth.signUp({email:em,password:pw,options:{data:{agency_name:n,plan:$("#pn").value,phone:ph},emailRedirectTo:new URL("index.html",location.href).href}});
   if(error)throw error;
   if(data.user&&data.user.identities&&data.user.identities.length===0)throw new Error("An account with this email already exists.");
-  $("#sf").style.display="none";$("#dn").style.display="block"
+  $("#sf").style.display="none";$("#dn").style.display="block";window.scrollTo(0,0)
  }catch(x){console.error(x);er(x.message||"Could not submit. Please try again.")}finally{btn.disabled=false}};
 </script></body></html>

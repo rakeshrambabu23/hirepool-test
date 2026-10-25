@@ -90,3 +90,29 @@ Open `http://localhost:8080`. Add `http://localhost:8080/index.html` and `/reset
 6. **Privacy pages:** Privacy policy, Terms and Data deletion are still footer text. You store personal data (resumes), so add real pages and a deletion process before launch.
 7. **Admin lists and agency candidate lists load in pages of 1000 rows** (the admin list loads up to 1000 agencies). Fine for early stage.
 8. **Obsolete files:** the Cloudflare Worker (`worker/index.js`, `worker/wrangler.toml`) is no longer used by any page. You can delete the `worker/` folder and any R2 bucket you created. Nothing in the site calls it any more.
+
+---
+
+# Update 03: mobile number, 10-day auto-delete, SEO
+
+## A. Database (do this first)
+1. Supabase > SQL Editor > New query: paste `supabase/03_migration_retention_and_phone.sql` > **Run**. Safe to run twice.
+2. If the last block prints a notice about `pg_cron`: Database > Extensions > enable **pg_cron**, then run the migration again.
+3. Jobs that already exist get a fresh 10 days from the moment you run it, so nothing disappears by surprise.
+
+## B. What changed
+- **Signup** asks for a mobile number (country dropdown + per-country check). Saved on the agency, shown in the admin tables.
+- **Job posts auto-delete 10 days after posting**, together with their candidates, notes and resume PDFs. Editing, closing or reopening a post does not extend it, and agencies cannot change the date.
+- From 3 days before deletion the agency Dashboard shows an alert per post with a **Download shortlisted** button (ZIP: `shortlisted.csv` + resume PDFs). The same button is on every card on the Jobs page. "Shortlisted" means status Shortlisted, Interview or Selected.
+- Expired posts stop accepting applications immediately.
+- Change the number of days: both `'10 days'` in the migration (then run it again) and `RETENTION_DAYS` in `js/data.js`.
+
+## C. How the deletion runs
+- Rows are removed by `purge_expired_jobs()`, every 30 minutes (pg_cron) and also whenever an agency or the admin opens a page.
+- Supabase blocks deleting files from SQL, so the resume files are queued in `purge_files` and removed by the next agency or admin page load through the Storage API. If an agency never logs in again, the admin page load clears their files. Open `admin.html` now and then.
+
+## D. SEO
+1. In `index.html`, `signup.html`, `robots.txt` and `sitemap.xml` replace `https://YOUR-DOMAIN.com` with your real address (no trailing slash).
+2. Upload the new `robots.txt`, `sitemap.xml`, `favicon.svg`, `og-image.png` next to `index.html`.
+3. Google Search Console > add your site > Sitemaps > submit `sitemap.xml`.
+4. Login, dashboard, admin, apply and reset pages are `noindex` (meta tag and `_headers`). Only the home and signup pages are indexed.
